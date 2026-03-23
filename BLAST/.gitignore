@@ -1,0 +1,61 @@
+# Nextflow files
+.nextflow/
+.nextflow.log*
+work/
+results/
+dag.html
+report.html
+timeline.html
+trace.txt
+
+# Large data files
+*.fasta
+*.fasta.gz
+*.fasta.*
+*.obo
+*.tab
+*.out
+*.phr
+*.pin
+*.pjs
+*.pot
+*.psq
+*.ptf
+*.pto
+*.pdb
+*.h5
+*.hdf5
+
+# MATLAB/Octave
+*.mat
+*.m~
+*.asv
+slurm-*.out
+
+# OS files
+.DS_Store
+Thumbs.db
+*~
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+temp/
+tmp/
+.tmp/

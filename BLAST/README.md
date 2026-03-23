@@ -1,10 +1,10 @@
 # BLAST Baseline for CAFA - Nextflow Workflow
 
-A simple, reproducible Nextflow pipeline for generating BLAST-based Gene Ontology (GO) function predictions for proteins. This workflow implements a sequence similarity-based baseline method for the CAFA (Critical Assessment of Functional Annotation) challenge.
+A Nextflow pipeline for generating BLAST-based Gene Ontology (GO) term predictions for proteins. This workflow implements a sequence similarity-based baseline method for the CAFA 5 (Critical Assessment of Functional Annotation 5) challenge.
 
 ## Overview
 
-This pipeline transfers functional annotations from a reference database of experimentally annotated proteins to query proteins using BLASTP. For each query protein, BLASTP finds similar sequences in the reference database, and GO annotations from the best matches are transferred as predictions.
+This pipeline transfers functional annotations from a reference database of experimentally annotated proteins to query proteins (testsuperset) using BLASTP. For each query protein, BLASTP finds similar sequences in the reference database, and GO annotations from the best matches are transferred as predictions.
 
 ## Requirements
 
@@ -48,25 +48,25 @@ nextflow run main.nf -profile local
 
 **testsuperset.fasta** - FASTA format query sequences
 ```
->protein_id_1
+>protein_id_1 taxon_id_1
 MIVLQRWVPVVQVLNQMPQQQQQQ...
->protein_id_2
+>protein_id_2 taxon_id_1
 MVQQQAVLNQMPQQQQQQQ...
 ```
 
 **final_blast_db_seqs.fasta** - FASTA format reference sequences
 ```
->ref_protein_1
+>tr|ref_protein_1|ref_protein_id_1
 MIVLQRWVPVVQVLNQMPQQQQQQ...
->ref_protein_2
+>sp|ref_protein_2|ref_protein_id_2
 MVQQQAVLNQMPQQQQQQQ...
 ```
 
-**annotation.tab** - Tab-separated file: protein_id    GO_term
+**annotation.tab** - Tab-separated file: protein_id ↦ GO_term
 ```
-ref_protein_1	GO:0008150
-ref_protein_1	GO:0005575
-ref_protein_2	GO:0006810
+ref_protein_id_1	GO:0008150
+ref_protein_id_1	GO:0005575
+ref_protein_id_2	GO:0006810
 ```
 
 **go-basic.obo** - Download from: http://purl.obolibrary.org/obo/go/go-basic.obo
@@ -84,13 +84,13 @@ results/
 └── blast_combined.out             # Combined BLASTP results
 ```
 
-Each prediction file contains: `query_id`    `GO_term`    `score`
+Each prediction file contains: `query_id` ↦ `GO_term` ↦ `score`
 
 Example output:
 ```
-protein_1	GO:0005575	0.98
-protein_1	GO:0008150	0.85
-protein_2	GO:0006810	0.72
+protein_id_1	GO:0005575	0.98
+protein_id_1	GO:0008150	0.85
+protein_id_2	GO:0006810	0.72
 ```
 
 ## How It Works
@@ -98,9 +98,9 @@ protein_2	GO:0006810	0.72
 The workflow consists of 4 steps:
 
 1. **Prepare Database** - Index the reference protein database for BLASTP
-2. **BLASTP Search** - Find similar sequences in reference database for each query
+2. **BLASTP Search** - Find similar sequences in reference database for each query (testsuperset protein)
 3. **Combine Results** - Merge BLASTP results from all searches
-4. **Predict GO Terms** - Transfer GO annotations from best-matching reference proteins
+4. **Predict GO Terms** - Transfer GO annotations using MATLAB code from CAFA2
 
 For each query protein, the pipeline finds all BLASTP matches with E-value ≤ 10.0. For each GO term annotated on any reference protein match, a confidence score is calculated as the sequence similarity of the best match annotated with that term.
 
