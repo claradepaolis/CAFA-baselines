@@ -1,10 +1,10 @@
 # BLAST Baseline for CAFA - Nextflow Workflow
 
-A simple, reproducible Nextflow pipeline for generating BLAST-based Gene Ontology (GO) function predictions for proteins. This workflow implements a sequence similarity-based baseline method for the CAFA (Critical Assessment of Functional Annotation) challenge.
+A Nextflow pipeline for generating BLAST-based Gene Ontology (GO) term predictions for proteins. This workflow implements a sequence similarity-based baseline method for the CAFA 5 (Critical Assessment of Functional Annotation 5) challenge.
 
 ## Overview
 
-This pipeline transfers functional annotations from a reference database of experimentally annotated proteins to query proteins using BLASTP. For each query protein, BLASTP finds similar sequences in the reference database, and GO annotations from the best matches are transferred as predictions.
+This pipeline transfers functional annotations from a reference database of experimentally annotated proteins to query proteins (testsuperset) using BLASTP. For each query protein, BLASTP finds similar sequences in the reference database, and GO annotations from the best matches are transferred as predictions.
 
 ## Requirements
 
