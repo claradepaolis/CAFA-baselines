@@ -22,7 +22,7 @@ process COMBINE_BLAST_RESULTS {
     cat ${blast_files.join(' ')} > blast_combined_unsorted.out
     
     # Step 3b: Remove duplicate lines while preserving order per query
-    awk '!seen[\$0]++' blast_combined_unsorted.out | sort -k1,1 -k5,5nr > blast_combined.out
+    # awk '!seen[\$0]++' blast_combined_unsorted.out | sort -k1,1 -k5,5nr > blast_combined.out
     
     # Step 3c: Format UniProt IDs - remove sp| and tr| prefixes
     sed -ri 's/sp\\|//g' blast_combined.out
