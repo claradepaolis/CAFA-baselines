@@ -1,0 +1,3 @@
+sed -ri 's/sp\|//g' evalset_similarity_norm_1000.tsv
+sed -ri 's/tr\|//g' evalset_similarity_norm_1000.tsv
+sed -ri 's/\|[^\t]*\t/\t/g' evalset_similarity_norm_1000.tsv
